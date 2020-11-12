@@ -1,4 +1,4 @@
-<h1>Trabalho de programação – Tema: Loja de peças de computador</h1>
+<h1>Trabalho de programação – Tema: Loja de peças de computador:computer:</h1>
 <h2>Grupo: Eduardo Antunes, Matheus Meneguitti, Nycolas Lacerda</h2>
 
 

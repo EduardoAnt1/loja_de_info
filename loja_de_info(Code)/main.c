@@ -17,7 +17,7 @@ int main()
     char dados_cliente[max][max], dados_pecas[max][max], str[max];
     float preco_peca[max], valor_venda[max];
     char nome[max], cpf[max];
-    for(i=0;i<5;i++){
+    for(i=0;i<100;i++){
     cod_peca_num_serie[i][0] = i+1; // codigo da peça
     cod_peca_num_serie[i][1] = rand(); // numero de serie
     }

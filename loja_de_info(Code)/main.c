@@ -4,194 +4,211 @@
 #include <unistd.h>
 #include <string.h>
 #define max 100
+typedef struct
+{
+ int codigo;
+ char cpf[50];
+ char nome[50];
+}dados_cliente;
+
+typedef struct
+{
+ int codigo;
+ int num_serie;
+ int ano_fabricacao;
+ char nome[20];
+ char categoria[50];
+ char fabricante[50];
+ float preco;
+}dados_peca;
+
+typedef struct
+{
+ int codigo;
+ char data[20];
+ float valor;
+}dados_vendas;
 
 int main()
 {
+    dados_cliente cliente[max];
+    dados_peca peca[max];
+    dados_vendas vendas[max];
+    int i,j;
+    int cod;
+    int op=1,op_cliente=1,op_peca=1,op_vendas=1,op_peca_venda=1;
+    int quant_clientes,quant_pecas,quant_vendas;
     setlocale(LC_ALL, "Portuguese");
 
-    int cod_cliente[max], cod_peca_num_serie[5][2], cod_venda[max], cod;
-    int j = 0, i, cont_pecas = 0, cont_clientes = 0, cont_vendas = 0;
-    int ano_peca[max], data_venda[max][3];
-    int op_cliente=1, op_peca=1, op_vendas = 1, op = 1;
-    int quant_cliente, quant_vendas, quant_pecas, quant_peca_venda;
-    char dados_cliente[max][max], dados_pecas[max][max], str[max];
-    float preco_peca[max], valor_venda[max];
-    char nome[max], cpf[max];
-    for(i=0;i<100;i++){
-    cod_peca_num_serie[i][0] = i+1; // codigo da peça
-    cod_peca_num_serie[i][1] = rand(); // numero de serie
-    }
-
-    printf("\t\t Cadastro de informações da Loja de peças de computador\n\n\n");
-    printf("------------------------------------------------------------------------------------------------------------------------");
-    while(op != 0){
-        op_cliente=1;
-        op_peca=1;
-        op_vendas=1;
-        printf("\t\t| Menu Principal                   |\n");
-        printf("\t\t| Realizar cadastro de Cliente - 1 |\n");
-        printf("\t\t| Realizar cadastro de Peças - 2   |\n");
-        printf("\t\t| Realizar cadastro de Venda - 3   |\n");
-        printf("\t\t| Sair - 0                         |\n");
-        scanf("%d", &op);
-        printf("------------------------------------------------------------------------------------------------------------------------");
+    while(op!=0)//menu principal
+    {   printf("------LOJA DE INFORMÁTICA------\n\n");
+        printf("\n-Menu do Cliente: 1");
+        printf("\n-Menu do Peças: 2");
+        printf("\n-Menu do Vendas: 3");
+        printf("\n-Sair: 0\n");
+        scanf("%d" , &op);
+        fflush(stdin);
         system("cls");
-        if (op == 1){
-            while(op_cliente != 0){
-                printf("\t\t| Menu de cadastro de cliente |\n");
-                printf("\t\t| Cadastro de cliente - 1     |\n");
-                printf("\t\t| Listagem de cliente - 2     |\n");
-                printf("\t\t| Sair - 0                    |\n");
+        if(op == 1)
+        {
+            while(op_cliente!=0)//menu do cliente
+            {
+                printf("\n-Menu do Cliente");
+                printf("\n-Cadastro de Cliente: 1");
+                printf("\n-Listagem de Cliente: 2");
+                printf("\n-Sair: 0\n");
                 scanf("%d", &op_cliente);
-                printf("------------------------------------------------------------------------------------------------------------------------");
+                fflush(stdin);
                 system("cls");
-                if(op_cliente == 1){
-                    printf("\t\t| Quantos clientes serão cadastrados?\n");
-                    scanf("%d",&quant_cliente);
-                    j = 0;
-                    for(i = 0; i < quant_cliente; i++){
-                        printf("\t\t| Digite o nome do cliente %d:\n", i);
+                if(op_cliente == 1)//Cadastro do cliente
+                {
+                    printf("------Cadastro de Cliente------\n\n");
+                    printf("\n-Quantos clientes serão cadastrados ?\n");
+                    scanf("%d",&quant_clientes);
+                    fflush(stdin);
+                    for(i=0;i<quant_clientes;i++)
+                    {
+                        printf("\n-Digite o nome do cliente:%d\n",i+1);
+                        gets(cliente[i].nome);
                         fflush(stdin);
-                        scanf("%s", &dados_cliente[j]);
-                        printf("\t\t| Digite o CPF do cliente %d:\n", i);
+
+                        printf("\n-Digite o cpf do cliente: %d\n",i+1);
+                        gets(cliente[i].cpf);
                         fflush(stdin);
-                        scanf("%s", &dados_cliente[j + 1]);
-                        fflush(stdin);
-                        cod_cliente[i] = i;
-                        printf("------------------------------------------------------------------------------------------------------------------------");
+
+                        cliente[i].codigo=i+1;
+
                         system("cls");
-                        j += 2; // Somamos 2 para que a posição do proximo cliente nao sobreponha o anterior
                     }
-                }
-                if(op_cliente == 2){
-                    j = 0;
-                    for(i = 0; i < quant_cliente; i++){
-                        printf("\t\t Cliente %d: \n", cod_cliente[i]);
-                        strcpy(nome, dados_cliente[j]);
-                        printf("\t\t Nome: ");
-                        puts(nome);
-                        strcpy(cpf, dados_cliente[j + 1]);
-                        printf("\t\t CPF: ");
-                        puts(cpf);
-                        j += 2;
-                        printf("------------------------------------------------------------------------------------------------------------------------");
+                }else{
+                    if(op_cliente == 2)//Listagem de cliente
+                    {
+                        printf("------Listagem de Cliente------");
+                        for(i=0;i<quant_clientes;i++)
+                        {
+                          printf("\n-Código:%d \n -Nome:%s \n -CPF:%s\n", cliente[i].codigo,cliente[i].nome,cliente[i].cpf);
+                        }
+                        system("pause");
+                        system("cls");
                     }
-                    _sleep(5000);
-                    system("cls");
                 }
             }
         }else{
-            if (op == 2){
-                while(op_peca != 0){
-                printf("\t\t| Menu de cadastro de peças |\n");
-                printf("\t\t| Cadastro de peça - 1      |\n");
-                printf("\t\t| Listagem de peça - 2      |\n");
-                printf("\t\t| Sair - 0                  |\n");
-                scanf("%d",&op_peca);
-                printf("------------------------------------------------------------------------------------------------------------------------");
-                system("cls");
-                    if(op_peca==1){
-                        printf("\t\t| Quantas peças serão cadastradas?\n");
+            if(op == 2)//Menu das Peças
+            {
+                while(op_peca!=0)
+                {
+                    printf("------Menu de Peças------\n\n");
+                    printf("\n-Cadastro de Peças: 1");
+                    printf("\n-Listagem de Peças: 2");
+                    printf("\n-Sair: 0\n");
+                    scanf("%d", &op_peca);
+                    system("cls");
+                    if(op_peca == 1)//Cadastro de peças
+                    {
+                        printf("------Cadastro de Peças------\n\n");
+                        printf("\n-Quantas peças serão cadastrados?\n");
                         scanf("%d",&quant_pecas);
-                        for(i=0;i<quant_pecas;i++){
-                        printf("\t\t Digite o nome da peça\n");
                         fflush(stdin);
-                        scanf("%s", &dados_pecas[cont_pecas]);
-                        fflush(stdin);
-                        printf("\t\t Digite a categoria da peça\n");
-                        scanf("%s", &dados_pecas[cont_pecas+1]);
-                        fflush(stdin);
-                        printf("\t\t Digite o fabricante da peça\n");
-                        scanf("%s", &dados_pecas[cont_pecas+2]);
-                        fflush(stdin);
-                        printf("\t\t Digite o preço da peça\n");
-                        scanf("%f", &preco_peca[i]);
-                        fflush(stdin);
-                        printf("\t\t Digite o ano de fabricação da peça\n");
-                        scanf("%d", &ano_peca[i]);
-                        fflush(stdin);
-                        cont_pecas += 3;
-                        printf("------------------------------------------------------------------------------------------------------------------------");
-                        system("cls");}
+                        system("cls");
+                        for(i=0;i<quant_pecas;i++)
+                        {
+                            printf("\nDigite o nome da peça: %d\n",i+1);
+                            gets(peca[i].nome);
+                            fflush(stdin);
+
+                            printf("\nDigite a categoria da peça: %d\n",i+1);
+                            gets(peca[i].categoria);
+                            fflush(stdin);
+
+                            printf("\nDigite o fabricante da peça: %d\n",i+1);
+                            gets(peca[i].fabricante);
+                            fflush(stdin);
+
+                            printf("\nDigite o ano de fabricação da peça: %d\n",i+1);
+                            scanf("%d",&peca[i].ano_fabricacao);
+                            fflush(stdin);
+
+                            printf("\nDigite o valor da peça: %d\n",i+1);
+                            scanf("%f",&peca[i].preco);
+                            fflush(stdin);
+
+                            peca[i].codigo=i+1;
+
+                            srand(time(NULL));
+                            peca[i].num_serie= rand();
+
+                            system("cls");
+                        }
                     }else{
-                        if(op_peca==2){
-                            j = 0;
-                            if(op_peca == 2){
-                            for(i=0;i<quant_pecas;i++){
-                                printf("\t\t Nome da peça\n");
-                                strcpy(str, dados_pecas[j]);
-                                puts(dados_pecas[j]);
-                                printf("\t\t Categoria da peça:\n");
-                                strcpy(str, dados_pecas[j + 1]);
-                                puts(dados_pecas[j + 1]);
-                                printf("\t\t Fabricante da peça:\n");
-                                strcpy(str, dados_pecas[j + 2]);
-                                puts(dados_pecas[j + 2]);
-                                printf("\t\t Preço da peça: %.2f\n", preco_peca[i]);
-                                printf("\t\t Ano de fabricação da peça: %d\n", ano_peca[i]);
-                                printf("\t\t Código da peça: %d\n", cod_peca_num_serie[i][0]);
-                                printf("\t\t Número de série da peça: %d\n", cod_peca_num_serie[i][1]);
-                                j += 3;
-                                printf("------------------------------------------------------------------------------------------------------------------------");
+                        if(op_peca == 2)//listagem das peças
+                        {
+                            printf("------Listagem de Peças------\n\n");
+                            for(i=0;i<quant_pecas;i++)
+                            {
+                            printf("\n-Código:%d \n-Número de Série:%d \n-Nome: %s \n-Categoria: %s \n-Fabricante: %s \n-Ano de fabricação:%d \n-Valor:%f \n",peca[i].codigo,peca[i].num_serie,peca[i].nome,peca[i].categoria,peca[i].fabricante,peca[i].ano_fabricacao,peca[i].preco);
                             }
-                            }
+;                            system("pause");
+                            system("cls");
                         }
                     }
                 }
             }else{
-                if(op==3){
-                    while(op_vendas!=0){
-                        printf("\t\t| Menu de cadastro de Vendas |\n\n");
-                        printf("\t\t| Cadastro de vendas - 1     |\n");
-                        printf("\t\t| Listagem de vendas - 2     |\n");
-                        printf("\t\t| Sair - 0                   |\n");
-                        scanf("%d",&op_vendas);
-                        printf("------------------------------------------------------------------------------------------------------------------------");
+                if(op == 3)
+                {
+                    while(op_vendas!=0)//Menu de vendas
+                    {
+                        printf("------Menu de Vendas------");
+                        printf("\n\n-Cadastro de Vendas: 1\n");
+                        printf("-Listagem de Vendas: 2\n");
+                        printf("-Sair: 0\n");
+                        scanf("%d", &op_vendas);
+                        fflush(stdin);
                         system("cls");
-                        if(op_vendas==1){
-                            j = 0;
-                            printf("\t\t Quantas vendas serão cadastradas?\n");
+                        if(op_vendas == 1)//Cadastro de vendas
+                        {
+                            printf("------Cadastro de Vendas------");
+                            printf("\n\n-Quantas venda serão cadastradas?\n");
                             scanf("%d",&quant_vendas);
-                            for(i=0;i<quant_pecas;i++){
-                                printf("\t\t Nome da peça\n");
-                                puts(dados_pecas[j]);
-                                printf("\t\t Preço da peça: %.2f\n", preco_peca[i]);
-                                printf("\t\t Código da peça: %d\n", cod_peca_num_serie[i][0]);
-                                j += 3;
-                                printf("------------------------------------------------------------------------------------------------------------------------");
-                            }
-                            for(i=0;i<quant_vendas;i++){
-                                fflush(stdin);
-                                printf("\t\t Digite o código da peça: \n");
-                                scanf("%d", &cod);
-                                fflush(stdin);
-                                printf("\t\t Digite o quantidade dessa peça: \n");
-                                scanf("%d", &quant_peca_venda);
-                                valor_venda[i] = quant_peca_venda * preco_peca[cod-1];
-                                fflush(stdin);
-                                printf("\t\t Digite o dia da venda %d: \n",i+1);
-                                scanf("%d", &data_venda[i][0]);
-                                printf("\t\t Digite o mês da venda %d: \n",i+1);
-                                scanf("%d", &data_venda[i][1]);
-                                printf("\t\t Digite o ano da venda %d: \n",i+1);
-                                scanf("%d", &data_venda[i][2]);
-                                fflush(stdin);
-                                cod_venda[i]=i;
-                                printf("------------------------------------------------------------------------------------------------------------------------");
+                            fflush(stdin);
+                            system("cls");
 
-                                system("cls");
-                            }
+                            for(i=0;i<quant_vendas;i++)
+                            {
 
-                        }else{
-                            if(op_vendas==2){
-                                for(i = 0; i < quant_vendas; i++){
-                                    printf("\t\t Código da venda: %d\n", cod_venda[i]);
-                                    printf("\t\t Valor da venda: %.2f\n", valor_venda[i]);
-                                    printf("\t\t Data da venda %d/%d/%d\n", data_venda[i][0], data_venda[i][1], data_venda[i][2]);
-                                    printf("------------------------------------------------------------------------------------------------------------------------");
-                                    _sleep(5000);
-                                    system("cls");
+                                for(j=0;j<quant_pecas;j++)//Listagem de peça para venda
+                                {
+                                printf("\n-Código:%d \n-Número de Série:%d \n-Nome: %s \n-Categoria: %s \n-Fabricante: %s \n-Ano de fabricação:%d \n-Valor:%f \n",peca[i].codigo,peca[i].num_serie,peca[i].nome,peca[i].categoria,peca[i].fabricante,peca[i].ano_fabricacao,peca[i].preco);
                                 }
+
+                                while(op_peca_venda!=0)//cadastro das peças vendidas
+                                {
+                                printf("\n-Digite o codigo da peça desejada:\n");
+                                scanf("%d",&cod);
+                                vendas[i].valor+=peca[cod-1].preco;
+                                printf("\n-Mais alguma peça?");
+                                printf("\n-Sim(1)");
+                                printf("\n-Não(0)\n");
+                                scanf("%d",&op_peca_venda);
+                                fflush(stdin);
+                                }
+
+                                printf("\nData da venda:\n");
+                                gets(vendas[i].data);
+                                fflush(stdin);
+                                system("cls");
+                                vendas[i].codigo=i+1;
+
+                            }
+                        }else{
+                            if(op_vendas == 2)//Listagem de vendas
+                            {
+                                printf("------Listagem de Vendas------");
+                                for(i=0;i<quant_vendas;i++)
+                                {
+                                printf("\n-Código:%d \n-Data da venda:%s \n-Valor:%2f",vendas[i].codigo,vendas[i].data,vendas[i].valor);                                }
+                                system("pause");
+                                system("cls");
                             }
                         }
                     }
@@ -199,5 +216,5 @@ int main()
             }
         }
     }
-    return 0;
+return 0;
 }

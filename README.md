@@ -6,6 +6,7 @@ Atualmente o mercado de peças de computador está se expandindo muito
 rapidamente, com lançamentos de peças como o SSD, a placa de vídeo RTX 
 3080, os processadores Intel de 10º geração, entre outros. 
 Exemplo de sistema já implementado: https://www.kabum.com.br/.
+Link do vídeo de explição no youtube: https://youtu.be/7ezJ3tKdXkw.
 
 <table>
 		<tr>

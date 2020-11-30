@@ -52,9 +52,9 @@ int main()
 
     while(op!=0)//menu principal
     {
-        op_cliente=reseta_menu;
-        op_peca=reseta_menu;
-        op_vendas=reseta_menu;
+        op_cliente=reseta_menu();
+        op_peca=reseta_menu();
+        op_vendas=reseta_menu();
         imprime_cabecalho();
         printf("\n-Menu do Cliente: 1");
         printf("\n-Menu de Peças: 2");
@@ -117,11 +117,11 @@ int main()
                             scanf("%d",&cod);
                             fflush(stdin);
 
-                            printf("\n-Digite o nome do cliente:%d\n",cod+1);
+                            printf("\n-Digite o nome do cliente:%d\n",cod);
                             gets(cliente[cod-1].nome);
                             fflush(stdin);
 
-                            printf("\n-Digite o cpf do cliente: %d\n",cod+1);
+                            printf("\n-Digite o cpf do cliente: %d\n",cod);
                             gets(cliente[cod-1].cpf);
                             fflush(stdin);
                         }
@@ -184,7 +184,13 @@ int main()
                             printf("------Listagem de Peças------\n\n");
                             for(i=0;i<quant_pecas;i++)
                             {
-                            printf("\n-Código:%d \n-Número de Série:%d \n-Nome: %s \n-Categoria: %s \n-Fabricante: %s \n-Ano de fabricação:%d \n-Valor:%f \n",peca[i].codigo,peca[i].num_serie,peca[i].nome,peca[i].categoria,peca[i].fabricante,peca[i].ano_fabricacao,peca[i].preco);
+                            printf("\n-Código:%d \n-Número de Série:%d \n-Nome: ",peca[i].codigo,peca[i].num_serie);
+                            puts(peca[i].nome);
+                            printf("-Categoria: ");
+                            puts(peca[i].categoria);
+                            printf("-Fabricante: ");
+                            puts(peca[i].fabricante);
+                            printf("\n-Ano de fabricação:%d \n-Valor:%.2f \n",peca[i].ano_fabricacao,peca[i].preco);
                             }
 ;                           system("pause");
                             op_alt=0;
@@ -201,23 +207,23 @@ int main()
                                 scanf("%d",&cod);
                                 fflush(stdin);
 
-                                printf("\nDigite o nome da peça: %d\n",i+1);
+                                printf("\nDigite o nome da peça: %d\n",cod);
                                 gets(peca[cod-1].nome);
                                 fflush(stdin);
 
-                                printf("\nDigite a categoria da peça: %d\n",i+1);
+                                printf("\nDigite a categoria da peça: %d\n",cod);
                                 gets(peca[cod-1].categoria);
                                 fflush(stdin);
 
-                                printf("\nDigite o fabricante da peça: %d\n",i+1);
+                                printf("\nDigite o fabricante da peça: %d\n",cod);
                                 gets(peca[cod-1].fabricante);
                                 fflush(stdin);
 
-                                printf("\nDigite o ano de fabricação da peça: %d\n",i+1);
+                                printf("\nDigite o ano de fabricação da peça: %d\n",cod);
                                 scanf("%d",&peca[cod-1].ano_fabricacao);
                                 fflush(stdin);
 
-                                printf("\nDigite o valor da peça: %d\n",i+1);
+                                printf("\nDigite o valor da peça: %d\n",cod);
                                 scanf("%f",&peca[cod-1].preco);
                                 fflush(stdin);
 
@@ -253,7 +259,13 @@ int main()
 
                                 for(j=0;j<quant_pecas;j++)//Listagem de peça para venda
                                 {
-                                printf("\n-Código:%d \n-Número de Série:%d \n-Nome: %s \n-Categoria: %s \n-Fabricante: %s \n-Ano de fabricação:%d \n-Valor:%f \n",peca[i].codigo,peca[i].num_serie,peca[i].nome,peca[i].categoria,peca[i].fabricante,peca[i].ano_fabricacao,peca[i].preco);
+                                printf("\n-Código:%d \n-Número de Série:%d \n-Nome: ",peca[j].codigo,peca[j].num_serie);
+                                puts(peca[j].nome);
+                                printf("-Categoria: ");
+                                puts(peca[j].categoria);
+                                printf("-Fabricante: ");
+                                puts(peca[j].fabricante);
+                                printf("\n-Ano de fabricação:%d \n-Valor:%.2f \n",peca[j].ano_fabricacao,peca[j].preco);
                                 }
 
                                 while(op_peca_venda!=0)//cadastro das peças vendidas
@@ -281,7 +293,7 @@ int main()
                                 printf("------Listagem de Vendas------");
                                 for(i=0;i<quant_vendas;i++)
                                 {
-                                printf("\n-Código:%d \n-Data da venda:%s \n-Valor:%2f",vendas[i].codigo,vendas[i].data,vendas[i].valor);                                }
+                                printf("\n-Código:%d \n-Data da venda:%s \n-Valor:%.2f\n",vendas[i].codigo,vendas[i].data,vendas[i].valor);                                }
                                 system("pause");
                                 system("cls");
                                 printf("\n-Deseja Alterar alguma venda?\n");
@@ -307,7 +319,7 @@ int main()
                                         fflush(stdin);
                                     }
                                     printf("\nData da venda:\n");
-                                    gets(vendas[cod].data);
+                                    gets(vendas[cod-1].data);
                                     fflush(stdin);
                                     system("cls");
                                 }
